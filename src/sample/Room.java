@@ -48,7 +48,7 @@ public class Room {
                         else if(nextLine.substring(i,i+1).equals("S")) {
                             Skeleton skeleton = new Skeleton();
                             skeleton.hp = 3;
-                            skeleton.color = Color.AZURE;
+                            skeleton.color = Color.BLUEVIOLET;
                             skeleton.name = "Skeleton";
                             skeleton.xp = 5;
                             skeleton.symbol = "S";
@@ -146,6 +146,17 @@ public class Room {
 
     public int getCell(int row, int col) {
         return myRoom[row][col];
+    }
+
+    public Enemy getEnemy(Player player) {
+        for(int i=0; i < enemies.size(); i++) {
+            Enemy e = enemies.get(i);
+            if(player.getRow() == e.row &&
+                    player.getCol() == e.col) {
+                return e;//player is on Enemy e
+            }
+        }
+        return null; //player is not on an Enemy
     }
 
 }

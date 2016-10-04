@@ -22,6 +22,9 @@ public class Main extends Application {
     ArrayList<String> input = new ArrayList<String>();
     World world = new World();
     public static final int OFFSET = 40;
+    Enemy currentEnemy = null;
+    public static final int MAP=1, FIGHT=2;
+    public int gameState = MAP;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -51,25 +54,63 @@ public class Main extends Application {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                //System.out.println(input);
-                processInput();
-                //backdrop
-                gc.setFill(Color.WHEAT);
-                gc.fillRect(0,0,800,600);
+                if(gameState == MAP) {
+                    //System.out.println(input);
+                    processInput();
+                    //backdrop
+                    gc.setFill(Color.WHEAT);
+                    gc.fillRect(0, 0, 800, 600);
 
-                //all current enemies act
-                world.getRoom(player.getWorldRow(),player.getWorldCol()).enemiesAct(player,world);
+                    //all current enemies act
+                    Room currentRoom = world.getRoom(player.getWorldRow(), player.getWorldCol());
+                    currentRoom.enemiesAct(player, world);
+                    currentEnemy = currentRoom.getEnemy(player);
+                    if(currentEnemy != null) {
+                        gameState = FIGHT;
+                    }
 
-                //map
-                world.drawRoom(player.getWorldRow(),player.getWorldCol(),player,gc);
+                    //map
+                    world.drawRoom(player.getWorldRow(), player.getWorldCol(), player, gc);
 
-                //character
-                player.draw(gc);
+                    //character
+                    player.draw(gc);
+                }
+                else if(gameState == FIGHT) {
+
+                    processFightInput();
+
+                    //backdrop
+                    gc.setFill(Color.ROYALBLUE);
+                    gc.fillRect(0, 0, 800, 600);
+
+                    drawFight(gc);
+                }
             }
         }.start();
 
         //last line
         primaryStage.show();
+    }
+
+    private void drawFight(GraphicsContext gc) {
+        gc.setFill(Color.CORNSILK);
+        gc.fillText("FIGHT", 340,50);
+
+        gc.setFill(Color.AQUA);
+        gc.fillText(player.getName(), 100, 100);
+    }
+
+    private void processFightInput() {
+        //go through the entire list of input
+        for(int i=0; i < input.size(); i++) {
+            //if the input is equal to W
+            if (input.get(i).equals("L")) {
+                gameState = MAP;
+                //remove W from list
+                input.remove(i);
+                i--;
+            }
+        }
     }
 
     private void processInput() {
