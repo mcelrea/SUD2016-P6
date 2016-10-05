@@ -98,6 +98,23 @@ public class Main extends Application {
 
         gc.setFill(Color.AQUA);
         gc.fillText(player.getName(), 100, 100);
+
+        gc.setFill(Color.LAVENDER);
+        gc.fillText(currentEnemy.name, 500, 100);
+
+        //draw player health bar
+        gc.setFill(Color.YELLOW);
+        gc.fillRect(100, 120, 100, 20);
+        gc.setFill(Color.HOTPINK);
+        gc.fillRect(100, 120, 100*(player.getHp()/(double)player.getMaxHp()),20);
+
+        //draw enemy health bar
+        gc.setFill(Color.YELLOW);
+        gc.fillRect(500, 120, 100, 20);
+        gc.setFill(Color.HOTPINK);
+        gc.fillRect(500, 120, 100*(currentEnemy.hp/(double)currentEnemy.maxHp),20);
+
+        player.drawAbilities(gc);
     }
 
     private void processFightInput() {
@@ -106,6 +123,18 @@ public class Main extends Application {
             //if the input is equal to W
             if (input.get(i).equals("L")) {
                 gameState = MAP;
+                //remove W from list
+                input.remove(i);
+                i--;
+            }
+            else if (input.get(i).equals("O")) {
+                player.setHp(player.getHp()-1);
+                //remove W from list
+                input.remove(i);
+                i--;
+            }
+            else if (input.get(i).equals("P")) {
+                currentEnemy.hp = currentEnemy.hp - 1;
                 //remove W from list
                 input.remove(i);
                 i--;

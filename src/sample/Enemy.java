@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 public abstract class Enemy {
 
     protected int hp;
+    protected int maxHp;
     protected int xp;
     protected String symbol;
     protected String name;

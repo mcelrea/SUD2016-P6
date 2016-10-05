@@ -3,6 +3,8 @@ package sample;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 /**
  * Created by mcelrea on 9/2/2016.
  */
@@ -13,6 +15,7 @@ public class Player {
     private int worldRow; //where he is in the world - row
     private int worldCol; //where he is in the world - column
     private int hp = 6;
+    private int maxHp = 6;
     private int xp = 0;
     private int vitality = 1; //more vitality = more health
     private int strength = 1; //more strength = more damage
@@ -23,6 +26,8 @@ public class Player {
     private int damageRating = 1; //how hard you hit
     private int level = 1;
     private int xpLevels[] = {0,0,10,20,35,60};
+    private Ability[] activeAbilities = new Ability[6];
+    private ArrayList<Ability> inactiveAbilities = new ArrayList<Ability>();
 
     public Player(String n) {
         name = n;
@@ -59,6 +64,18 @@ public class Player {
         gc.fillText("       Wisdom: " + wisdom, 510, 290);
         gc.setFill(Color.BLACK);
         gc.fillText("Damage Rating: " + damageRating, 510, 320);
+    }
+
+    public void drawAbilities(GraphicsContext gc) {
+        gc.setFill(Color.BISQUE);
+        for(int i=0; i < activeAbilities.length; i++) {
+            if(activeAbilities[i] == null) {
+                gc.fillText((i+1) + ". no ability", 100, 170+(i*30));
+            }
+            else {
+                gc.fillText((i+1) + activeAbilities[i].getName(), 100, 170+(i*30));
+            }
+        }
     }
 
     public int getRow() {
@@ -260,6 +277,7 @@ public class Player {
 
     public void updateStats() {
         hp = (vitality * 2) + level + 3;
+        maxHp = (vitality * 2) + level + 3;
         damageRating = strength * 2 + level;
         magick = wisdom * 2 + level;
 
@@ -270,5 +288,13 @@ public class Player {
                 break;//exit
             }
         }
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
     }
 }

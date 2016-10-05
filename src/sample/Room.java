@@ -48,6 +48,7 @@ public class Room {
                         else if(nextLine.substring(i,i+1).equals("S")) {
                             Skeleton skeleton = new Skeleton();
                             skeleton.hp = 3;
+                            skeleton.maxHp = 3;
                             skeleton.color = Color.BLUEVIOLET;
                             skeleton.name = "Skeleton";
                             skeleton.xp = 5;
