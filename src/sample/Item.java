@@ -14,6 +14,7 @@ public class Item {
     private int damageRating = 0; //how hard you hit
     private int row;
     private int col;
+    private Ability ability;
 
     public Item(String name, String description) {
         this.name = name;
@@ -122,5 +123,13 @@ public class Item {
 
     public void setCol(int col) {
         this.col = col;
+    }
+
+    public Ability getAbility() {
+        return ability;
+    }
+
+    public void setAbility(Ability ability) {
+        this.ability = ability;
     }
 }

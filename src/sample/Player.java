@@ -73,7 +73,7 @@ public class Player {
                 gc.fillText((i+1) + ". no ability", 100, 170+(i*30));
             }
             else {
-                gc.fillText((i+1) + activeAbilities[i].getName(), 100, 170+(i*30));
+                gc.fillText((i+1) + ". " + activeAbilities[i].getName(), 100, 170+(i*30));
             }
         }
     }
@@ -290,11 +290,33 @@ public class Player {
         }
     }
 
+    public void addAbility(Ability a) {
+        inactiveAbilities.add(a);//add abilites to the inactiveAbilities every time
+
+        //go through all the active abilities
+        for(int i=0; i < activeAbilities.length; i++) {
+            //if there is an empty space then activate this ability
+            if(activeAbilities[i] == null) {
+                activeAbilities[i] = a;
+                return;//exit
+            }
+        }
+    }
+
     public int getMaxHp() {
         return maxHp;
     }
 
     public void setMaxHp(int maxHp) {
         this.maxHp = maxHp;
+    }
+
+    public void useAbility(int num, Enemy enemy) {
+        Ability a = activeAbilities[num-1];
+        if(a != null) {
+            int damage = (int) (a.getMinDamage() + Math.random() * (a.getMaxDamage() - a.getMinDamage() + 1));
+            enemy.hp = enemy.hp - damage;
+            Main.addCombatText("You use [" + a.getName() + "] to cause " + damage + " damage.");
+        }
     }
 }

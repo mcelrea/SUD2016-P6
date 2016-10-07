@@ -43,6 +43,9 @@ public class Room {
                             item.setRow(row);
                             item.setCol(col);
                             item.setVitality(2);
+                            item.setAbility(new Ability("Smash","description"));
+                            item.getAbility().setMinDamage(1);
+                            item.getAbility().setMaxDamage(3);
                             items.add(item);
                         }
                         else if(nextLine.substring(i,i+1).equals("S")) {
@@ -138,6 +141,10 @@ public class Room {
                 player.setMagick(player.getMagick()+temp.getMagick());
                 player.setStrength(player.getStrength()+temp.getStrength());
                 player.setXp(player.getXp()+temp.getXp());
+                //if this item grants the player an ability
+                if(temp.getAbility() != null) {
+                    player.addAbility(temp.getAbility());
+                }
                 items.remove(i);
                 i--;
                 player.updateStats();
