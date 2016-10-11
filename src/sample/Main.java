@@ -23,8 +23,9 @@ public class Main extends Application {
     World world = new World();
     public static final int OFFSET = 40;
     Enemy currentEnemy = null;
-    public static final int MAP=1, FIGHT=2;
+    public static final int MAP=1, FIGHT=2, PLAYERTURN=3, ENEMYTURN=4;
     public int gameState = MAP;
+    public static int turn = PLAYERTURN;
     public static String combatText1 = "COMBAT TEXT";
     public static String combatText2 = "COMBAT TEXT";
     public static String combatText3 = "COMBAT TEXT";
@@ -82,7 +83,17 @@ public class Main extends Application {
                 }
                 else if(gameState == FIGHT) {
 
-                    processFightInput();
+                    if(turn == PLAYERTURN) {
+                        processFightInput();
+                        if(currentEnemy.hp <= 0) {
+                            Room currentRoom = world.getRoom(player.getWorldRow(), player.getWorldCol());
+                            currentRoom.removeEnemy(currentEnemy);
+                            gameState = MAP;
+                        }
+                    }
+                    else {//else its the enemies turn
+                        currentEnemy.attack(player);
+                    }
 
                     //backdrop
                     gc.setFill(Color.ROYALBLUE);

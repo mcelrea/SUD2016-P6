@@ -317,6 +317,7 @@ public class Player {
             int damage = (int) (a.getMinDamage() + Math.random() * (a.getMaxDamage() - a.getMinDamage() + 1));
             enemy.hp = enemy.hp - damage;
             Main.addCombatText("You use [" + a.getName() + "] to cause " + damage + " damage.");
+            Main.turn = Main.ENEMYTURN;
         }
     }
 }

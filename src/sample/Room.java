@@ -167,4 +167,8 @@ public class Room {
         return null; //player is not on an Enemy
     }
 
+    public void removeEnemy(Enemy enemy) {
+        enemies.remove(enemy);
+    }
+
 }
