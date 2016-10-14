@@ -1,10 +1,12 @@
 package sample;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
 
@@ -15,11 +17,14 @@ public class Room {
     int myRoom[][];
     ArrayList<Item> items = new ArrayList<Item>();
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    Image wallImage;
 
     public Room(String path) {
+        File imageFile = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\wall.png");
         myRoom = new int[20][20];
         File file = new File(path);
         try {
+            wallImage = new Image(new FileInputStream(imageFile));
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String nextLine;
             int count = 0;
@@ -92,7 +97,8 @@ public class Room {
             for(int col=0; col < myRoom[row].length; col++) {
                 if(myRoom[row][col] == 1) {
                     gc.setFill(Color.BLACK);
-                    gc.fillText("1",Main.OFFSET+col*20,Main.OFFSET+row*20);
+                    //gc.fillText("1",Main.OFFSET+col*20,Main.OFFSET+row*20);
+                    gc.drawImage(wallImage,Main.OFFSET+col*20,Main.OFFSET+row*20-20);
                 }
             }
         }

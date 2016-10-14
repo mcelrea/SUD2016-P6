@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public abstract class Enemy {
@@ -15,12 +16,15 @@ public abstract class Enemy {
     protected Color color;
     protected int row;
     protected int col;
+    protected Image forwardImage;
 
     public void draw(GraphicsContext gc) {
         gc.setFill(color);
-        gc.fillText(symbol,
-                Main.OFFSET+col*20,
-                Main.OFFSET+row*20);
+        //gc.fillText(symbol,
+        //        Main.OFFSET+col*20,
+        //        Main.OFFSET+row*20);
+        gc.drawImage(forwardImage,Main.OFFSET+col*20,
+                Main.OFFSET+row*20-20);
     }
 
     public abstract void act(Player player, World world);
