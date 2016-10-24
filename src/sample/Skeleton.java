@@ -11,8 +11,10 @@ public class Skeleton extends Enemy{
     public Skeleton() {
         lastAct = System.currentTimeMillis();
         File file = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\skeleton.png");
+        File file2 = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\skeletonFullSize.png");
         try {
             forwardImage = new Image(new FileInputStream(file));
+            fightImage = new Image(new FileInputStream(file2));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

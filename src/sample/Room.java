@@ -44,7 +44,8 @@ public class Room {
                         }
                         else if(nextLine.substring(i,i+1).equals("R")) {
                             Item item = new Item("Ring of Vitality",
-                                    "A small glint of metal shows on the floor");
+                                    "A small glint of metal shows on the floor",
+                                    "C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\ring.png");
                             item.setRow(row);
                             item.setCol(col);
                             item.setVitality(2);
@@ -105,18 +106,12 @@ public class Room {
 
         //go through and draw all the items
         for(int i=0; i < items.size(); i++) {
-            System.out.println("looping");
-            if(items.get(i).getName().equals("Ring of Vitality")) {
-                gc.setFill(Color.BLACK);
-                gc.fillText("O",
-                        Main.OFFSET+items.get(i).getCol()*20,
-                        Main.OFFSET+items.get(i).getRow()*20);
+            items.get(i).draw(gc);
                 if(items.get(i).getRow() == player.getRow() &&
                         items.get(i).getCol() == player.getCol()) {
                     gc.setFill(Color.BLACK);
                     gc.fillText(items.get(i).getDescription(), 30, 475);
                 }
-            }
         }
 
         //draw all the enemies

@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.xml.internal.fastinfoset.algorithm.BuiltInEncodingAlgorithm;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -7,12 +8,15 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 public class Main extends Application {
@@ -23,7 +27,7 @@ public class Main extends Application {
     World world = new World();
     public static final int OFFSET = 40;
     Enemy currentEnemy = null;
-    public static final int MAP=1, FIGHT=2, PLAYERTURN=3, ENEMYTURN=4;
+    public static final int MAP=1, FIGHT=2, PLAYERTURN=3, ENEMYTURN=4, GAMEOVER=5;
     public int gameState = MAP;
     public static int turn = PLAYERTURN;
     public static String combatText1 = "COMBAT TEXT";
@@ -31,6 +35,7 @@ public class Main extends Application {
     public static String combatText3 = "COMBAT TEXT";
     public static String combatText4 = "COMBAT TEXT";
     public static String combatText5 = "COMBAT TEXT";
+    Image gameOverImage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -44,6 +49,9 @@ public class Main extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         Font myFont = Font.font("Courier New", FontWeight.BOLD, 24);
         gc.setFont(myFont);
+
+        File file = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\endScreen.png");
+        gameOverImage = new Image(new FileInputStream(file));
 
         world.getRoom(10,10).debugRoom();
 
@@ -93,6 +101,9 @@ public class Main extends Application {
                     }
                     else {//else its the enemies turn
                         currentEnemy.attack(player);
+                        if(player.getHp() <= 0) {
+                            gameState = GAMEOVER;
+                        }
                     }
 
                     //backdrop
@@ -101,11 +112,30 @@ public class Main extends Application {
 
                     drawFight(gc);
                 }
+                else if(gameState == GAMEOVER) {
+                    gc.drawImage(gameOverImage,0,0);
+                    processGameOverInput();
+                }
             }
         }.start();
 
         //last line
         primaryStage.show();
+    }
+
+    private void processGameOverInput() {
+        //go through the entire list of input
+        for(int i=0; i < input.size(); i++) {
+            //if the input is equal to SPACE
+            if (input.get(i).equals("SPACE")) {
+                gameState = MAP;
+                player = new Player(player.getName()); //reset player
+                world = new World(); //reset world
+                //remove W from list
+                input.remove(i);
+                i--;
+            }
+        }
     }
 
     private void drawFight(GraphicsContext gc) {
@@ -139,6 +169,8 @@ public class Main extends Application {
         gc.fillText(combatText3, 10,450);
         gc.fillText(combatText4, 10,475);
         gc.fillText(combatText5, 10,500);
+
+        currentEnemy.drawFightImage(gc);
     }
 
     public static void addCombatText(String text) {

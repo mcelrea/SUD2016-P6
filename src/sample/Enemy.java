@@ -17,6 +17,7 @@ public abstract class Enemy {
     protected int row;
     protected int col;
     protected Image forwardImage;
+    protected Image fightImage;
 
     public void draw(GraphicsContext gc) {
         gc.setFill(color);
@@ -25,6 +26,10 @@ public abstract class Enemy {
         //        Main.OFFSET+row*20);
         gc.drawImage(forwardImage,Main.OFFSET+col*20,
                 Main.OFFSET+row*20-20);
+    }
+
+    public void drawFightImage(GraphicsContext gc) {
+        gc.drawImage(fightImage,500,200);
     }
 
     public abstract void act(Player player, World world);
