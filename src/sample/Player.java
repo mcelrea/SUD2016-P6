@@ -21,13 +21,16 @@ public class Player {
     private int hp = 6;
     private int maxHp = 6;
     private int xp = 0;
-    private int vitality = 1; //more vitality = more health
-    private int strength = 1; //more strength = more damage
-    private int luck = 1; //more luck = more crits
-    private int intelligence = 1; //more int = better magick
-    private int wisdom = 1; //more wisdom = more magick
-    private int magick = 3; //magick points
-    private int damageRating = 1; //how hard you hit
+    private int strength; //more strength = more damage
+    private int strengthModifier;
+    private int dexterity;
+    private int dexterityModifier;
+    private int constitution;
+    private int constitutionModifier;
+    private int wisdom; //more wisdom = more magick
+    private int wisdomModifier;
+    private int armorClass;
+    private int gold;
     private int level = 1;
     private int xpLevels[] = {0,0,10,20,35,60};
     private Ability[] activeAbilities = new Ability[6];
@@ -60,21 +63,43 @@ public class Player {
         gc.setFill(Color.BLACK);
         gc.fillText("       Health: " + hp, 510, 80);
         gc.setFill(Color.BLACK);
-        gc.fillText("       Magick: " + magick, 510, 110);
+        gc.fillText("   Experience: " + xp, 510, 110);
         gc.setFill(Color.BLACK);
-        gc.fillText("   Experience: " + xp, 510, 140);
+        gc.fillText("     Strength: " + strength, 510, 140);
         gc.setFill(Color.BLACK);
-        gc.fillText("     Vitality: " + vitality, 510, 170);
+        gc.fillText("       Wisdom: " + wisdom, 510, 170);
         gc.setFill(Color.BLACK);
-        gc.fillText("     Strength: " + strength, 510, 200);
+        gc.fillText("    Dexterity: " + dexterity, 510, 200);
         gc.setFill(Color.BLACK);
-        gc.fillText("         Luck: " + luck, 510, 230);
+        gc.fillText(" Constitution: " + constitution, 510, 230);
         gc.setFill(Color.BLACK);
-        gc.fillText(" Intelligence: " + intelligence, 510, 260);
+        gc.fillText("  Armor Class: " + armorClass, 510, 260);
         gc.setFill(Color.BLACK);
-        gc.fillText("       Wisdom: " + wisdom, 510, 290);
-        gc.setFill(Color.BLACK);
-        gc.fillText("Damage Rating: " + damageRating, 510, 320);
+        gc.fillText("         Gold: " + gold, 510, 290);
+    }
+
+    public int statRoll() {
+        int die1 = (int) (1 + Math.random() * 6);
+        int die2 = (int) (1 + Math.random() * 6);
+        int die3 = (int) (1 + Math.random() * 6);
+        int die4 = (int) (1 + Math.random() * 6);
+
+        //if die1 is the smallest
+        if(die1 <= die2 && die1 <= die3 && die1 <= die4) {
+            return die2+die3+die4;
+        }
+        //if die2 is the smallest
+        else if(die2 <= die1 && die2 <= die3 && die2 <= die4) {
+            return die1+die3+die4;
+        }
+        //if die3 is the smallest
+        else if(die3 <= die1 && die3 <= die2 && die4 <= die4) {
+            return die1+die2+die4;
+        }
+        //die 4 is the smallest
+        else {
+            return die1+die2+die3;
+        }
     }
 
     public void drawAbilities(GraphicsContext gc) {
@@ -222,36 +247,12 @@ public class Player {
         this.xp = xp;
     }
 
-    public int getVitality() {
-        return vitality;
-    }
-
-    public void setVitality(int vitality) {
-        this.vitality = vitality;
-    }
-
     public int getStrength() {
         return strength;
     }
 
     public void setStrength(int strength) {
         this.strength = strength;
-    }
-
-    public int getLuck() {
-        return luck;
-    }
-
-    public void setLuck(int luck) {
-        this.luck = luck;
-    }
-
-    public int getIntelligence() {
-        return intelligence;
-    }
-
-    public void setIntelligence(int intelligence) {
-        this.intelligence = intelligence;
     }
 
     public int getWisdom() {
@@ -262,43 +263,12 @@ public class Player {
         this.wisdom = wisdom;
     }
 
-    public int getMagick() {
-        return magick;
-    }
-
-    public void setMagick(int magick) {
-        this.magick = magick;
-    }
-
-    public int getDamageRating() {
-        return damageRating;
-    }
-
-    public void setDamageRating(int damageRating) {
-        this.damageRating = damageRating;
-    }
-
     public int getLevel() {
         return level;
     }
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public void updateStats() {
-        hp = (vitality * 2) + level + 3;
-        maxHp = (vitality * 2) + level + 3;
-        damageRating = strength * 2 + level;
-        magick = wisdom * 2 + level;
-
-        //check for level gain
-        for(int i=0; i < xpLevels.length; i++) {
-            if(xp < xpLevels[i]) {
-                level = i;
-                break;//exit
-            }
-        }
     }
 
     public void addAbility(Ability a) {

@@ -133,13 +133,8 @@ public class Room {
                     items.get(i).getCol() == player.getCol()) {
                 //erase the item from the room
                 Item temp = items.get(i); //grab the item
-                player.setVitality(player.getVitality()+temp.getVitality());
                 player.setWisdom(player.getWisdom()+temp.getWisdom());
-                player.setIntelligence(player.getIntelligence()+temp.getIntelligence());
-                player.setLuck(player.getLuck()+temp.getLuck());
-                player.setDamageRating(player.getDamageRating()+temp.getDamageRating());
                 player.setHp(player.getHp()+temp.getHp());
-                player.setMagick(player.getMagick()+temp.getMagick());
                 player.setStrength(player.getStrength()+temp.getStrength());
                 player.setXp(player.getXp()+temp.getXp());
                 //if this item grants the player an ability
@@ -148,7 +143,6 @@ public class Room {
                 }
                 items.remove(i);
                 i--;
-                player.updateStats();
             }
         }
     }

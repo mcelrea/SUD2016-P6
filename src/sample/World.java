@@ -9,6 +9,7 @@ public class World {
         rooms[9][10] = new Room("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\Rooms\\room9-10");
         rooms[10][10] = new Room("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\Rooms\\room10-10");
         rooms[9][11] = new Room("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\Rooms\\room9-11");
+        rooms[8][11] = new Room("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\Rooms\\room8-11");
     }
 
     public void drawRoom(int row, int col, Player player, GraphicsContext gc) {
