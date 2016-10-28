@@ -2,7 +2,7 @@ package sample;
 
 public class Dice {
 
-    public int statRoll() {
+    public static int statRoll() {
         int die1 = (int) (1 + Math.random() * 6);
         int die2 = (int) (1 + Math.random() * 6);
         int die3 = (int) (1 + Math.random() * 6);
@@ -20,9 +20,21 @@ public class Dice {
         else if(die3 <= die1 && die3 <= die2 && die3 <= die4) {
             return die1+die2+die4;
         }
-        //die 4 is the smallest
         else {
             return die1+die2+die3;
         }
+    }
+
+    public static int rollDie(int sides) {
+        return (int) (1 + Math.random() * sides);
+    }
+
+    public static int rollDice(int number, int sides) {
+        int total = 0;
+        for(int i=0; i < number; i++) {
+            int die = (int) (1 + Math.random() * sides);
+            total += die;
+        }
+        return total;
     }
 }

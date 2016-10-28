@@ -49,6 +49,18 @@ public class Player {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        strength = Dice.statRoll();
+        strengthModifier = strength/2;
+        dexterity = Dice.statRoll();
+        dexterityModifier = dexterity/2;
+        constitution = Dice.statRoll();
+        constitutionModifier = constitution/2;
+        wisdom = Dice.statRoll();
+        wisdomModifier = wisdom/2;
+        armorClass = 10 + dexterityModifier;
+        gold = Dice.rollDice(4,4) * 10;
+        hp = Dice.rollDie(8) + constitutionModifier;
+        maxHp = hp;
     }
 
     public void draw(GraphicsContext gc) {
@@ -76,30 +88,6 @@ public class Player {
         gc.fillText("  Armor Class: " + armorClass, 510, 260);
         gc.setFill(Color.BLACK);
         gc.fillText("         Gold: " + gold, 510, 290);
-    }
-
-    public int statRoll() {
-        int die1 = (int) (1 + Math.random() * 6);
-        int die2 = (int) (1 + Math.random() * 6);
-        int die3 = (int) (1 + Math.random() * 6);
-        int die4 = (int) (1 + Math.random() * 6);
-
-        //if die1 is the smallest
-        if(die1 <= die2 && die1 <= die3 && die1 <= die4) {
-            return die2+die3+die4;
-        }
-        //if die2 is the smallest
-        else if(die2 <= die1 && die2 <= die3 && die2 <= die4) {
-            return die1+die3+die4;
-        }
-        //if die3 is the smallest
-        else if(die3 <= die1 && die3 <= die2 && die3 <= die4) {
-            return die1+die2+die4;
-        }
-        //die 4 is the smallest
-        else {
-            return die1+die2+die3;
-        }
     }
 
     public void drawAbilities(GraphicsContext gc) {
