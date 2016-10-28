@@ -93,7 +93,7 @@ public class Player {
             return die1+die3+die4;
         }
         //if die3 is the smallest
-        else if(die3 <= die1 && die3 <= die2 && die4 <= die4) {
+        else if(die3 <= die1 && die3 <= die2 && die3 <= die4) {
             return die1+die2+die4;
         }
         //die 4 is the smallest
