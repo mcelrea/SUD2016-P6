@@ -283,7 +283,18 @@ public class Player {
     public void useAbility(int num, Enemy enemy) {
         Ability a = activeAbilities[num-1];
         if(a != null) {
-            int damage = (int) (a.getMinDamage() + Math.random() * (a.getMaxDamage() - a.getMinDamage() + 1));
+            //int damage = (int) (a.getMinDamage() + Math.random() * (a.getMaxDamage() - a.getMinDamage() + 1));
+            int damage = Dice.rollDice(a.getNumOfDice(),a.getDiceSides());
+            if(a.getDamageType() == Ability.STRENGTH) {
+                damage += strengthModifier;
+            }
+            else if(a.getDamageType() == Ability.DEXTERITY) {
+                damage += dexterityModifier;
+            }
+            else {
+                damage += wisdomModifier;
+            }
+
             enemy.hp = enemy.hp - damage;
             Main.addCombatText("You use [" + a.getName() + "] to cause " + damage + " damage.");
             Main.turn = Main.ENEMYTURN;

@@ -4,6 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 public abstract class Enemy {
 
     protected int hp;
@@ -18,6 +20,25 @@ public abstract class Enemy {
     protected int col;
     protected Image forwardImage;
     protected Image fightImage;
+    protected int hpNumOfDice;
+    protected int hpDiceSides;
+    protected int hpModifier;
+    protected int strength;
+    protected int strengthModifier;
+    protected int dexterity;
+    protected int dexterityModifier;
+    protected int wisdom;
+    protected int wisdomModifier;
+    protected int damageModifier;
+    protected ArrayList<Ability> abilities = new ArrayList<Ability>();
+
+    public Enemy(int hpModifier, int strengthModifier,
+                 int dexterityModifier, int wisdomModifier) {
+        this.hpModifier = hpModifier;
+        this.strengthModifier = strengthModifier;
+        this.dexterityModifier = dexterityModifier;
+        this.wisdomModifier = wisdomModifier;
+    }
 
     public void draw(GraphicsContext gc) {
         gc.setFill(color);
@@ -30,6 +51,10 @@ public abstract class Enemy {
 
     public void drawFightImage(GraphicsContext gc) {
         gc.drawImage(fightImage,500,200);
+    }
+
+    public void addAbility(Ability a) {
+        abilities.add(a);
     }
 
     public abstract void act(Player player, World world);

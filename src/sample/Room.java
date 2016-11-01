@@ -49,19 +49,18 @@ public class Room {
                             item.setRow(row);
                             item.setCol(col);
                             item.setVitality(2);
-                            item.setAbility(new Ability("Smash","description"));
-                            item.getAbility().setMinDamage(1);
-                            item.getAbility().setMaxDamage(3);
+                            item.setAbility(new Ability("Slash",
+                                                        "description",
+                                                        10,
+                                                        "1d6",
+                                                        0,
+                                                        12,
+                                                        0,
+                                                        Ability.DEXTERITY));
                             items.add(item);
                         }
                         else if(nextLine.substring(i,i+1).equals("S")) {
-                            Skeleton skeleton = new Skeleton();
-                            skeleton.hp = 3;
-                            skeleton.maxHp = 3;
-                            skeleton.color = Color.BLUEVIOLET;
-                            skeleton.name = "Skeleton";
-                            skeleton.xp = 5;
-                            skeleton.symbol = "S";
+                            Skeleton skeleton = new Skeleton(0,-4,-1,-1);
                             skeleton.row = row;
                             skeleton.col = col;
                             enemies.add(skeleton);

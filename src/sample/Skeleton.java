@@ -8,7 +8,9 @@ import java.io.FileNotFoundException;
 
 public class Skeleton extends Enemy{
 
-    public Skeleton() {
+    public Skeleton(int hpModifier, int strengthModifier,
+                    int dexterityModifier, int wisdomModifier) {
+        super(hpModifier,strengthModifier,dexterityModifier,wisdomModifier);
         lastAct = System.currentTimeMillis();
         File file = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\skeleton.png");
         File file2 = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\skeletonFullSize.png");
@@ -18,6 +20,29 @@ public class Skeleton extends Enemy{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        hpNumOfDice = 3;
+        hpDiceSides = 6;
+        hp = Dice.rollDice(hpNumOfDice,hpDiceSides) + hpModifier;
+        maxHp = hp;
+        strength = 3;
+        dexterity = 8;
+        wisdom = 3;
+        addAbility(new Ability("Swipe",
+                               "description",
+                               0,
+                               "1d4",
+                               0,
+                               0,
+                               0,
+                               Ability.DEXTERITY));
+        addAbility(new Ability("Putrid Bile",
+                               "description",
+                                0,
+                               "1d4",
+                                0,
+                                0,
+                                0,
+                                Ability.WISDOM));
     }
 
     @Override
