@@ -60,7 +60,7 @@ public class Room {
                             items.add(item);
                         }
                         else if(nextLine.substring(i,i+1).equals("S")) {
-                            Skeleton skeleton = new Skeleton(0,-4,-1,-1);
+                            Skeleton skeleton = new Skeleton(0,-4,-1,-1,0);
                             skeleton.row = row;
                             skeleton.col = col;
                             enemies.add(skeleton);

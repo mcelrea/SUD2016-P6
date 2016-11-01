@@ -9,8 +9,10 @@ import java.io.FileNotFoundException;
 public class Skeleton extends Enemy{
 
     public Skeleton(int hpModifier, int strengthModifier,
-                    int dexterityModifier, int wisdomModifier) {
+                    int dexterityModifier, int wisdomModifier,
+                    int damageModifier) {
         super(hpModifier,strengthModifier,dexterityModifier,wisdomModifier);
+        this.damageModifier = damageModifier;
         lastAct = System.currentTimeMillis();
         File file = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\skeleton.png");
         File file2 = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\skeletonFullSize.png");
@@ -72,8 +74,29 @@ public class Skeleton extends Enemy{
 
     @Override
     public void attack(Player player) {
-        player.setHp(player.getHp()-1);
-        Main.addCombatText("Skeleton uses [dry rot] for 1 damage");
+        int r = (int) (1 + Math.random() * 2);
+        Ability a;
+        if(r == 1) {
+            a = abilities.get(0);
+        }
+        else {
+            a = abilities.get(1);
+        }
+
+        int damage = Dice.rollDice(a.getNumOfDice(),a.getDiceSides());
+        damage += damageModifier;
+        if(a.getDamageType() == Ability.STRENGTH) {
+            damage += strength/2 + strengthModifier;
+        }
+        else if(a.getDamageType() == Ability.DEXTERITY) {
+            damage += dexterity/2 + dexterityModifier;
+        }
+        else {
+            damage += wisdom/2 + wisdomModifier;
+        }
+
+        player.setHp(player.getHp()-damage);
+        Main.addCombatText("Skeleton uses [" + a.getName() + "] for " + damage + " damage");
         Main.turn = Main.PLAYERTURN;
     }
 }
