@@ -18,6 +18,7 @@ public class Room {
     ArrayList<Item> items = new ArrayList<Item>();
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     Image wallImage;
+    Store store;
 
     public Room(String path) {
         File imageFile = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\wall.png");
@@ -117,6 +118,10 @@ public class Room {
         for(int i=0; i < enemies.size(); i++) {
             enemies.get(i).draw(gc);
         }
+
+        if(store != null) {
+            gc.fillText("$",Main.OFFSET+store.col*20,Main.OFFSET+store.row*20);
+        }
     }
 
     public void enemiesAct(Player player, World world) {
@@ -159,6 +164,16 @@ public class Room {
             }
         }
         return null; //player is not on an Enemy
+    }
+
+    public Store getStore(Player p) {
+
+        if(store != null && p.getRow() == store.row &&
+                p.getCol() == store.col) {
+            return store;
+        }
+
+        return null;//the player is not on a store
     }
 
     public void removeEnemy(Enemy enemy) {

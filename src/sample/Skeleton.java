@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -84,6 +85,17 @@ public class Skeleton extends Enemy{
         }
 
         int damage = Dice.rollDice(a.getNumOfDice(),a.getDiceSides());
+        int criticalHitMiss = Dice.rollDie(20);
+        //roll a 20, do critical damage
+        if(criticalHitMiss == 20) {
+            damage *= 2;
+        }
+        //roll a 1, critical miss
+        if(criticalHitMiss == 1) {
+            Main.addCombatText(name + " attempts to use [" + a.getName()+ "], but critically misses!!!!", Color.RED);
+            Main.turn = Main.PLAYERTURN;
+            return; //exit
+        }
         damage += damageModifier;
         if(a.getDamageType() == Ability.STRENGTH) {
             damage += strength/2 + strengthModifier;
@@ -95,8 +107,18 @@ public class Skeleton extends Enemy{
             damage += wisdom/2 + wisdomModifier;
         }
 
-        player.setHp(player.getHp()-damage);
-        Main.addCombatText("Skeleton uses [" + a.getName() + "] for " + damage + " damage");
+        if(damage > 0) {
+            player.setHp(player.getHp() - damage);
+            if(criticalHitMiss != 20) {
+                Main.addCombatText("Skeleton uses [" + a.getName() + "] for " + damage + " damage", Color.RED);
+            }
+            else {
+                Main.addCombatText("Skeleton uses [" + a.getName() + "] for " + damage + " critical damage", Color.RED);
+            }
+        }
+        else {
+            Main.addCombatText("Skeleton attempts to use [" + a.getName() + "] but misses.", Color.RED);
+        }
         Main.turn = Main.PLAYERTURN;
     }
 }

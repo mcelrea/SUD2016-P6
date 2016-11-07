@@ -27,14 +27,19 @@ public class Main extends Application {
     World world = new World();
     public static final int OFFSET = 40;
     Enemy currentEnemy = null;
-    public static final int MAP=1, FIGHT=2, PLAYERTURN=3, ENEMYTURN=4, GAMEOVER=5;
+    public static final int MAP=1, FIGHT=2, PLAYERTURN=3, ENEMYTURN=4, GAMEOVER=5, STORE=6;
     public int gameState = MAP;
     public static int turn = PLAYERTURN;
     public static String combatText1 = "COMBAT TEXT";
+    static Color combatText1Color = Color.BLACK;
     public static String combatText2 = "COMBAT TEXT";
+    static Color combatText2Color = Color.BLACK;
     public static String combatText3 = "COMBAT TEXT";
+    static Color combatText3Color = Color.BLACK;
     public static String combatText4 = "COMBAT TEXT";
+    static Color combatText4Color = Color.BLACK;
     public static String combatText5 = "COMBAT TEXT";
+    static Color combatText5Color = Color.BLACK;
     Image gameOverImage;
 
     @Override
@@ -90,12 +95,11 @@ public class Main extends Application {
                     player.draw(gc);
 
                     //draw the combat text
-                    gc.setFill(Color.BLACK);
-                    gc.fillText(combatText1, 10,450);
-                    gc.fillText(combatText2, 10,475);
-                    gc.fillText(combatText3, 10,500);
-                    gc.fillText(combatText4, 10,525);
-                    gc.fillText(combatText5, 10,550);
+                    drawGameText(gc);
+
+                    if(currentRoom.getStore(player) != null) {
+                        gameState = STORE;
+                    }
                 }
                 else if(gameState == FIGHT) {
 
@@ -124,11 +128,84 @@ public class Main extends Application {
                     gc.drawImage(gameOverImage,0,0);
                     processGameOverInput();
                 }
+                else if(gameState == STORE) {
+                    Room currentRoom = world.getRoom(player.getWorldRow(), player.getWorldCol());
+                    currentRoom.store.draw(gc);
+                    processStoreInput();
+                    drawGameText(gc);
+                }
             }
         }.start();
 
         //last line
         primaryStage.show();
+    }
+
+
+    public static void drawGameText(GraphicsContext gc) {
+
+        gc.setFill(Color.BLACK);
+        gc.fillRect(7,425,780,150);
+        gc.setStroke(Color.WHITE);
+        gc.strokeRect(7,425,780,150);
+
+        //draw the combat text
+        gc.setFill(combatText1Color);
+        gc.fillText(combatText1, 10,450);
+
+        gc.setFill(combatText2Color);
+        gc.fillText(combatText2, 10,475);
+
+        gc.setFill(combatText3Color);
+        gc.fillText(combatText3, 10,500);
+
+        gc.setFill(combatText4Color);
+        gc.fillText(combatText4, 10,525);
+
+        gc.setFill(combatText5Color);
+        gc.fillText(combatText5, 10,550);
+    }
+
+    private void processStoreInput() {
+        //go through the entire list of input
+        for(int i=0; i < input.size(); i++) {
+            //if the input is equal to SPACE
+            if (input.get(i).equals("SPACE")) {
+                gameState = MAP;
+                player.setRow(player.getRow()+1);
+                //remove W from list
+                input.remove(i);
+                i--;
+            }
+            //if the input is equal to DIGIT1
+            else if (input.get(i).equals("DIGIT1")) {
+                world.getRoom(player.getWorldRow(),player.getWorldCol()).store.purchaseAbility(player,1);
+                //remove W from list
+                input.remove(i);
+                i--;
+            }
+            //if the input is equal to DIGIT1
+            else if (input.get(i).equals("DIGIT2")) {
+                world.getRoom(player.getWorldRow(),player.getWorldCol()).store.purchaseAbility(player,2);
+                //remove W from list
+                input.remove(i);
+                i--;
+            }
+            //if the input is equal to DIGIT1
+            else if (input.get(i).equals("DIGIT3")) {
+                world.getRoom(player.getWorldRow(),player.getWorldCol()).store.purchaseAbility(player,3);
+                //remove W from list
+                input.remove(i);
+                i--;
+            }
+            //if the input is equal to DIGIT1
+            else if (input.get(i).equals("DIGIT4")) {
+                world.getRoom(player.getWorldRow(),player.getWorldCol()).store.purchaseAbility(player,4);
+                //remove W from list
+                input.remove(i);
+                i--;
+            }
+        }
     }
 
     private void processGameOverInput() {
@@ -171,25 +248,28 @@ public class Main extends Application {
         player.drawAbilities(gc);
 
         //draw the combat text
-        gc.setFill(Color.ORANGE);
-        gc.fillText(combatText1, 10,400);
-        gc.fillText(combatText2, 10,425);
-        gc.fillText(combatText3, 10,450);
-        gc.fillText(combatText4, 10,475);
-        gc.fillText(combatText5, 10,500);
+        drawGameText(gc);
 
         currentEnemy.drawFightImage(gc);
     }
 
-    public static void addCombatText(String text) {
+    public static void addCombatText(String text, Color color) {
         //scroll the combat text down
         combatText5 = combatText4;
+        combatText5Color = combatText4Color;
+
         combatText4 = combatText3;
+        combatText4Color = combatText3Color;
+
         combatText3 = combatText2;
+        combatText3Color = combatText2Color;
+
         combatText2 = combatText1;
+        combatText2Color = combatText1Color;
 
         //add new text
         combatText1 = text;
+        combatText1Color = color;
     }
 
     private void processFightInput() {

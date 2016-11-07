@@ -296,8 +296,72 @@ public class Player {
             }
 
             enemy.hp = enemy.hp - damage;
-            Main.addCombatText("You use [" + a.getName() + "] to cause " + damage + " damage.");
+            Main.addCombatText("You use [" + a.getName() + "] to cause " + damage + " damage.", Color.WHITE);
             Main.turn = Main.ENEMYTURN;
         }
+    }
+
+    public int getStrengthModifier() {
+        return strengthModifier;
+    }
+
+    public void setStrengthModifier(int strengthModifier) {
+        this.strengthModifier = strengthModifier;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    public int getDexterityModifier() {
+        return dexterityModifier;
+    }
+
+    public void setDexterityModifier(int dexterityModifier) {
+        this.dexterityModifier = dexterityModifier;
+    }
+
+    public int getConstitution() {
+        return constitution;
+    }
+
+    public void setConstitution(int constitution) {
+        this.constitution = constitution;
+    }
+
+    public int getConstitutionModifier() {
+        return constitutionModifier;
+    }
+
+    public void setConstitutionModifier(int constitutionModifier) {
+        this.constitutionModifier = constitutionModifier;
+    }
+
+    public int getWisdomModifier() {
+        return wisdomModifier;
+    }
+
+    public void setWisdomModifier(int wisdomModifier) {
+        this.wisdomModifier = wisdomModifier;
+    }
+
+    public int getArmorClass() {
+        return armorClass;
+    }
+
+    public void setArmorClass(int armorClass) {
+        this.armorClass = armorClass;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 }
