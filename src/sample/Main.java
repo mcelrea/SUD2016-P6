@@ -130,7 +130,7 @@ public class Main extends Application {
                 }
                 else if(gameState == STORE) {
                     Room currentRoom = world.getRoom(player.getWorldRow(), player.getWorldCol());
-                    currentRoom.store.draw(gc);
+                    currentRoom.store.draw(gc, player);
                     processStoreInput();
                     drawGameText(gc);
                 }
