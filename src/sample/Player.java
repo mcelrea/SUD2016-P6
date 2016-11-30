@@ -364,4 +364,42 @@ public class Player {
     public void setGold(int gold) {
         this.gold = gold;
     }
+
+    public void addHealth(int health) {
+        hp += health;
+        if(hp > maxHp)
+            hp = maxHp;
+    }
+
+    public void checkForLevelUp() {
+        int temp=0;
+        for(int i=0; i < xpLevels.length; i++) {
+            if(xp >= xpLevels[i])
+                temp++;
+            else
+                break;
+        }
+        //if player leveled up
+        if(temp-1 > level) {
+            level++;
+            Main.addCombatText("You leveled up!!!!!", Color.HOTPINK);
+            int addHealth = Dice.rollDie(8);
+            maxHp += addHealth;
+            hp = maxHp;
+            Main.addCombatText("Gained " + addHealth + " health!!", Color.HOTPINK);
+            addToBestStat();
+        }
+    }
+
+    public void addToBestStat() {
+        if(strength >= dexterity && strength >= wisdom) {
+            strength += 2;
+        }
+        else if(dexterity >= strength && dexterity >= wisdom) {
+            dexterity += 2;
+        }
+        else {
+            wisdom += 2;
+        }
+    }
 }

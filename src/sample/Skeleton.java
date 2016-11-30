@@ -23,6 +23,7 @@ public class Skeleton extends Enemy{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        xp = 5;
         hpNumOfDice = 3;
         hpDiceSides = 6;
         hp = Dice.rollDice(hpNumOfDice,hpDiceSides) + hpModifier;

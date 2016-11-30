@@ -41,6 +41,7 @@ public class Main extends Application {
     public static String combatText5 = "COMBAT TEXT";
     static Color combatText5Color = Color.BLACK;
     Image gameOverImage;
+    int healthChance = 50;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -107,6 +108,14 @@ public class Main extends Application {
                         processFightInput();
                         if(currentEnemy.hp <= 0) {
                             Room currentRoom = world.getRoom(player.getWorldRow(), player.getWorldCol());
+                            int chance = (int) (1 + Math.random() * 100);
+                            if(healthChance >= chance) {
+                                int health = (int) ((player.getMaxHp()/3) + Math.random() * (player.getMaxHp()/3));
+                                player.addHealth(health);
+                                addCombatText("Enemy dropped " + health + " health.", Color.GREEN);
+                            }
+                            player.setXp(player.getXp() + currentEnemy.xp);
+                            player.checkForLevelUp();
                             currentRoom.removeEnemy(currentEnemy);
                             gameState = MAP;
                         }
@@ -201,6 +210,20 @@ public class Main extends Application {
             //if the input is equal to DIGIT1
             else if (input.get(i).equals("DIGIT4")) {
                 world.getRoom(player.getWorldRow(),player.getWorldCol()).store.purchaseAbility(player,4);
+                //remove W from list
+                input.remove(i);
+                i--;
+            }
+            //if the input is equal to DIGIT1
+            else if (input.get(i).equals("DIGIT5")) {
+                world.getRoom(player.getWorldRow(),player.getWorldCol()).store.purchaseAbility(player,5);
+                //remove W from list
+                input.remove(i);
+                i--;
+            }
+            //if the input is equal to DIGIT1
+            else if (input.get(i).equals("DIGIT6")) {
+                world.getRoom(player.getWorldRow(),player.getWorldCol()).store.purchaseAbility(player,6);
                 //remove W from list
                 input.remove(i);
                 i--;

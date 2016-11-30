@@ -30,6 +30,38 @@ public class World {
                 0,
                 0,
                 Ability.STRENGTH));
+        rooms[10][10].store.addAbility(new Ability("Fireball",
+                "description",
+                15,
+                "1d8",
+                0,
+                0,
+                12,
+                Ability.WISDOM));
+        rooms[10][10].store.addAbility(new Ability("Greatsword",
+                "description",
+                10,
+                "2d5",
+                19,
+                0,
+                0,
+                Ability.STRENGTH));
+        rooms[10][10].store.addAbility(new Ability("Scorch",
+                "description",
+                10,
+                "2d5",
+                0,
+                0,
+                19,
+                Ability.WISDOM));
+        rooms[10][10].store.addAbility(new Ability("Dual Sai",
+                "description",
+                10,
+                "3d4",
+                0,
+                19,
+                0,
+                Ability.DEXTERITY));
     }
 
     public void drawRoom(int row, int col, Player player, GraphicsContext gc) {
