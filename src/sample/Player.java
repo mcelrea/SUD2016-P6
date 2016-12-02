@@ -58,7 +58,7 @@ public class Player {
         wisdom = Dice.statRoll();
         wisdomModifier = wisdom/2;
         armorClass = 10 + dexterityModifier;
-        gold = Dice.rollDice(4,4) * 10;
+        gold = Dice.rollDice(4,4) + 10;
         hp = Dice.rollDie(8) + constitutionModifier;
         maxHp = hp;
     }
@@ -388,18 +388,37 @@ public class Player {
             hp = maxHp;
             Main.addCombatText("Gained " + addHealth + " health!!", Color.HOTPINK);
             addToBestStat();
+            addTo2ndStat();
         }
     }
 
     public void addToBestStat() {
         if(strength >= dexterity && strength >= wisdom) {
             strength += 2;
+            Main.addCombatText("You gained 2 strength", Color.HOTPINK);
         }
         else if(dexterity >= strength && dexterity >= wisdom) {
             dexterity += 2;
+            Main.addCombatText("You gained 2 dexterity", Color.HOTPINK);
         }
         else {
             wisdom += 2;
+            Main.addCombatText("You gained 2 wisdom", Color.HOTPINK);
+        }
+    }
+
+    public void addTo2ndStat() {
+        if(strength >= dexterity && strength <= wisdom) {
+            strength += 1;
+            Main.addCombatText("You gained 1 strength", Color.HOTPINK);
+        }
+        else if(dexterity >= strength && dexterity <= wisdom) {
+            dexterity += 1;
+            Main.addCombatText("You gained 1 dexterity", Color.HOTPINK);
+        }
+        else {
+            wisdom += 1;
+            Main.addCombatText("You gained 1 wisdom", Color.HOTPINK);
         }
     }
 }

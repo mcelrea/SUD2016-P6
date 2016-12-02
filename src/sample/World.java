@@ -40,7 +40,7 @@ public class World {
                 Ability.WISDOM));
         rooms[10][10].store.addAbility(new Ability("Greatsword",
                 "description",
-                10,
+                25,
                 "2d5",
                 19,
                 0,
@@ -48,7 +48,7 @@ public class World {
                 Ability.STRENGTH));
         rooms[10][10].store.addAbility(new Ability("Scorch",
                 "description",
-                10,
+                25,
                 "2d5",
                 0,
                 0,
@@ -56,12 +56,40 @@ public class World {
                 Ability.WISDOM));
         rooms[10][10].store.addAbility(new Ability("Dual Sai",
                 "description",
-                10,
+                25,
                 "3d4",
                 0,
                 19,
                 0,
                 Ability.DEXTERITY));
+
+        rooms[8][11].store = new Store();
+        rooms[8][11].store.row = 7;
+        rooms[8][11].store.col = 16;
+        rooms[8][11].store.addAbility(new Ability("Edged Dagger",
+                "description",
+                24,
+                "2d5",
+                0,
+                23,
+                0,
+                Ability.DEXTERITY));
+        rooms[8][11].store.addAbility(new Ability("Battle Axe",
+                "description",
+                30,
+                "2d6",
+                25,
+                0,
+                0,
+                Ability.STRENGTH));
+        rooms[8][11].store.addAbility(new Ability("Ice Blast",
+                "description",
+                23,
+                "2d5",
+                0,
+                0,
+                23,
+                Ability.WISDOM));
     }
 
     public void drawRoom(int row, int col, Player player, GraphicsContext gc) {

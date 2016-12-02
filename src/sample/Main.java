@@ -116,6 +116,7 @@ public class Main extends Application {
                             }
                             player.setXp(player.getXp() + currentEnemy.xp);
                             player.checkForLevelUp();
+                            player.setGold(player.getGold() + currentEnemy.getDroppedGold());
                             currentRoom.removeEnemy(currentEnemy);
                             gameState = MAP;
                         }

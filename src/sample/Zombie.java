@@ -7,15 +7,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class Skeleton extends Enemy{
+public class Zombie extends Enemy{
 
-    public Skeleton(int hpModifier, int strengthModifier,
+    public Zombie(int hpModifier, int strengthModifier,
                     int dexterityModifier, int wisdomModifier,
                     int damageModifier) {
         super(hpModifier,strengthModifier,dexterityModifier,wisdomModifier);
         this.damageModifier = damageModifier;
         lastAct = System.currentTimeMillis();
-        File file = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\skeleton.png");
+        File file = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\characterForward.png");
         File file2 = new File("C:\\Users\\mcelrea\\Documents\\Game Programming P6\\Graphical SUDD P6\\src\\images\\skeletonFullSize.png");
         try {
             forwardImage = new Image(new FileInputStream(file));
@@ -23,30 +23,31 @@ public class Skeleton extends Enemy{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        actRate = 500; //move every 1/2 second
         xp = 5;
         hpNumOfDice = 3;
-        hpDiceSides = 6;
+        hpDiceSides = 8;
         hp = Dice.rollDice(hpNumOfDice,hpDiceSides) + hpModifier;
         maxHp = hp;
-        strength = 3;
-        dexterity = 8;
-        wisdom = 3;
-        addAbility(new Ability("Swipe",
-                               "description",
-                               0,
-                               "1d4",
-                               0,
-                               0,
-                               0,
-                               Ability.DEXTERITY));
-        addAbility(new Ability("Putrid Bile",
-                               "description",
-                                0,
-                               "1d4",
-                                0,
-                                0,
-                                0,
-                                Ability.WISDOM));
+        strength = 8;
+        dexterity = 5;
+        wisdom = 1;
+        addAbility(new Ability("Kick",
+                "description",
+                0,
+                "2d3",
+                0,
+                0,
+                0,
+                Ability.STRENGTH));
+        addAbility(new Ability("Head Butt",
+                "description",
+                0,
+                "2d4",
+                0,
+                0,
+                0,
+                Ability.STRENGTH));
     }
 
     @Override
@@ -111,14 +112,14 @@ public class Skeleton extends Enemy{
         if(damage > 0) {
             player.setHp(player.getHp() - damage);
             if(criticalHitMiss != 20) {
-                Main.addCombatText("Skeleton uses [" + a.getName() + "] for " + damage + " damage", Color.RED);
+                Main.addCombatText("Zombie uses [" + a.getName() + "] for " + damage + " damage", Color.RED);
             }
             else {
-                Main.addCombatText("Skeleton uses [" + a.getName() + "] for " + damage + " critical damage", Color.RED);
+                Main.addCombatText("Zombie uses [" + a.getName() + "] for " + damage + " critical damage", Color.RED);
             }
         }
         else {
-            Main.addCombatText("Skeleton attempts to use [" + a.getName() + "] but misses.", Color.RED);
+            Main.addCombatText("Zombie attempts to use [" + a.getName() + "] but misses.", Color.RED);
         }
         Main.turn = Main.PLAYERTURN;
     }
@@ -127,10 +128,10 @@ public class Skeleton extends Enemy{
     public int getDroppedGold() {
         int chance = (int) (1 + Math.random() * 100);
 
-        //50% chance to drop gold
-        if(chance <= 50) {
-            int gold = (int) (1 + Math.random() * 3); //1-3 gold
-            Main.addCombatText("Skeleton dropped " + gold + " gold", Color.GOLD);
+        //20% chance to drop gold
+        if(chance <= 20) {
+            int gold = (int) (4 + Math.random() * 5); //4,5,6,7,8 gold
+            Main.addCombatText("Zombie dropped " + gold + " gold", Color.GOLD);
             return gold;
         }
         else {

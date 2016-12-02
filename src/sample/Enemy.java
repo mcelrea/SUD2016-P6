@@ -59,4 +59,5 @@ public abstract class Enemy {
 
     public abstract void act(Player player, World world);
     public abstract void attack(Player player);
+    public abstract int getDroppedGold();
 }
